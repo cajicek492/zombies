@@ -3,7 +3,7 @@ import { Background } from "./ui/basic-util.js";
 /*const myZombie = new Zombie("Tomas", 5, 0, 150);
 myZombie.walk();*/
 
-
+const myZombie = new Zombie("Janek", 5, 0, 4, 5);
 const background = new Background();
 
 const canvas = document.getElementById("canvas");
@@ -59,10 +59,14 @@ const resizeCanvas = () => {
   canvas.height = 720;
 };
 const clearCanvas = () => {
-  background.draw(ctx)
+  background.draw(ctx);
 };
-const update = () => {};
-const render = () => {};
+const update = () => {
+  myZombie.update();
+};
+const render = () => {
+  myZombie.draw(ctx);
+};
 const getFps = () => {};
 
 window.onload = () => {
