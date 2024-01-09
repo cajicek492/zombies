@@ -32,11 +32,13 @@ export class Zombie {
       this.size.height
     );
   }
-
+  // Death Sranding
   walk() {
+    //posouvame o silu
     this.position.x -= this.velocity.ratio * 30;
     this.position.y += this.velocity.y;
     this.ratio += this.velocity.ratio;
+    // PRENASTAVIT DONT FORGET MILIONS WEAR HATS
     this.size = {
       width: 100 * this.ratio,
       height: 200 * this.ratio,
@@ -46,8 +48,9 @@ export class Zombie {
   update() {
     this.walk();
   }
-
+  //nastaveni obrazu
   setType(type) {
+    // pole s odkazama
     const paths = [
       "./res/img/zombies/zombie1.png",
       "./res/img/zombies/zombie2.png",
@@ -63,6 +66,7 @@ export class Zombie {
       "./res/img/zombies/zombie12.png",
       "./res/img/zombies/zombie13.png",
     ];
+    //nastaveni atrubut dle indexu
     this.path = paths[type];
   }
 }
