@@ -1,9 +1,6 @@
 import { Zombie } from "./zombies/Zombie.js";
 import { Background } from "./ui/basic-util.js";
-/*const myZombie = new Zombie("Tomas", 5, 0, 150);
-myZombie.walk();*/
 
-const myZombie = new Zombie("Janek", 5, 0, 4, 5);
 const background = new Background();
 
 const canvas = document.getElementById("canvas");
@@ -62,14 +59,32 @@ const clearCanvas = () => {
   background.draw(ctx);
 };
 const update = () => {
-  myZombie.update();
+  Zombie.zombies.map((zombie) =>{
+    zombie.update();
+  })
 };
 const render = () => {
-  myZombie.draw(ctx);
+  Zombie.zombies.map((zombie) => {
+    zombie.draw(ctx);
+  })
 };
 const getFps = () => {};
 
-window.onload = () => {
+//funkce pro nacteni dat
+const loadData = async () => {
+  //nacteme soubor s daty pro zombies - await - cekame nez se nacte
+  //pokud je await musime dat async
+  const zombiesFile = await fetch("./res/data/zombies.json");
+  //konvertovani na json
+  const zombiesData = await zombiesFile.json();
+  // nastavime tride Zombies zombiesData
+  Zombie.zombiesData = zombiesData;
+};
+
+window.onload = async () => {
+  await loadData();
+  Zombie.genZombies();
+  console.log(Zombie.zombiesData);
   //vyzada si prvni snimek herni smycky
   window.requestAnimationFrame(gameLoop);
 };

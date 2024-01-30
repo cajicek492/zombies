@@ -1,11 +1,15 @@
 export class Zombie {
-  constructor(name, hp, dmg, speed, type) {
+  //dana vec patri tride - volame pomoci - nazevTridy.neco - Zombie.zombiesData
+  static zombiesData;
+  // v tomto atributu se budou ukladat vsechny zombies
+  static zombies = [];
+
+  constructor(name, hp, speed, path) {
     this.name = name;
     this.hp = hp;
-    this.dmg = dmg;
     this.speed = speed;
     this.img = new Image();
-    this.setType(type);
+    this.path = path;
     this.img.src = this.path;
     this.ratio = 0.3;
     this.size = {
@@ -48,6 +52,7 @@ export class Zombie {
   update() {
     this.walk();
   }
+  /*
   //nastaveni obrazu
   setType(type) {
     // pole s odkazama
@@ -68,5 +73,10 @@ export class Zombie {
     ];
     //nastaveni atrubut dle indexu
     this.path = paths[type];
+  }*/
+  static genZombies() {
+    Zombie.zombiesData.map((zombie) => {
+      Zombie.zombies.push(new Zombie(zombie.name, zombie.hp,zombie.speed,zombie.path));
+    })
   }
 }
