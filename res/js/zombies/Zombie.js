@@ -17,16 +17,28 @@ export class Zombie {
       height: 200 * this.ratio,
     };
     this.position = {
-      x: 600,
+      x: this.randomInteger(0,1100),
       y: 180,
     };
     this.velocity = {
       x: 1,
       y: 2,
-      ratio: 0.005,
+      ratio: this.speed,
     };
+    this.counter = 0;
   }
 
+  respawn() {
+    this.position = {
+      x: this.randomInteger(0,1100),
+      y: 180,
+    };
+    this.ratio = 0.3;
+  }
+
+  randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
   draw(ctx) {
     ctx.drawImage(
       this.img,
@@ -38,10 +50,15 @@ export class Zombie {
   }
   // Death Sranding
   walk() {
+    this.counter++;
+    if(this.counter>=10){
+      this.counter=0;
+      this.ratio += 0.01;
+    }
     //posouvame o silu
-    this.position.x -= this.velocity.ratio * 30;
-    this.position.y += this.velocity.y;
-    this.ratio += this.velocity.ratio;
+    this.position.x -= this.velocity.ratio * 0.05;
+    this.position.y += this.speed;
+    
     // PRENASTAVIT DONT FORGET MILIONS WEAR HATS
     this.size = {
       width: 100 * this.ratio,
@@ -50,6 +67,9 @@ export class Zombie {
   }
   // aktualizace zombie
   update() {
+    if(this.position.y > 720) {
+      this.respawn();
+    }
     this.walk();
   }
   /*
