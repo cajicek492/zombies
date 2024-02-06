@@ -48,13 +48,9 @@ export class Zombie {
       this.size.height
     );
   }
-  // Death Sranding
+  // Death Stranding
   walk() {
-    this.counter++;
-    if(this.counter>=10){
-      this.counter=0;
-      this.ratio += 0.01;
-    }
+   this.ratio = this.position.y / 500;
     //posouvame o silu
     this.position.x -= this.velocity.ratio * 0.05;
     this.position.y += this.speed;
