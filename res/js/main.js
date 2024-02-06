@@ -1,7 +1,8 @@
 import { Zombie } from "./zombies/Zombie.js";
-import { Background } from "./ui/basic-util.js";
+import { Background, Crosshair } from "./ui/basic-util.js";
 
 const background = new Background();
+const crosshair = new Crosshair();
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -34,6 +35,16 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   keys[e.code] = false; // Klavesa: false
 });
+let mouseX;
+let mouseY;
+document.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+   mouseX =
+    ((e.clientX - rect.left) / (rect.right - rect.left)) * canvas.width;
+  mouseY =
+    ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height;
+  
+});
 //herni smycka
 const gameLoop = () => {
   //console.log(keys);
@@ -59,14 +70,15 @@ const clearCanvas = () => {
   background.draw(ctx);
 };
 const update = () => {
-  Zombie.zombies.map((zombie) =>{
+  Zombie.zombies.map((zombie) => {
     zombie.update();
-  })
+  });
 };
 const render = () => {
   Zombie.zombies.map((zombie) => {
     zombie.draw(ctx);
-  })
+  });
+  crosshair.draw(ctx, mouseX, mouseY)
 };
 const getFps = () => {};
 
