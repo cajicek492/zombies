@@ -62,8 +62,9 @@ export class Zombie {
     };
   }
   // aktualizace zombie
-  update() {
+  update(healthbar) {
     if(this.position.y > 720) {
+      healthbar.hp -=10;
       this.respawn();
     }
     this.walk();

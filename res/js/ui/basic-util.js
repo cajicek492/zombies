@@ -1,41 +1,66 @@
 export class Background {
-
-    constructor() {
-        this.img = new Image();
-        this.path = "./res/img/background.png";
-        this.img.src = this.path;
-        this.size = {
-            width: 1280,
-            height: 720
-        };
-        this.position = {
-            x: 0,
-            y: 0
-        };
-    }
-    draw(ctx){
-        ctx.drawImage(this.img, this.position.x, this.position.y, this.size.width, this.size.height)
-    }
+  constructor() {
+    this.img = new Image();
+    this.path = "./res/img/background.png";
+    this.img.src = this.path;
+    this.size = {
+      width: 1280,
+      height: 720,
+    };
+    this.position = {
+      x: 0,
+      y: 0,
+    };
+  }
+  draw(ctx) {
+    ctx.drawImage(
+      this.img,
+      this.position.x,
+      this.position.y,
+      this.size.width,
+      this.size.height
+    );
+  }
 }
 
 export class Crosshair {
-    constructor() {
+  constructor() {
+    this.img = new Image();
+    this.path = "./res/img/crosshair.png";
+    this.img.src = this.path;
+    this.size = {
+      width: 100,
+      height: 100,
+    };
+    this.position = {
+      x: 0,
+      y: 0,
+    };
+  }
+  draw(ctx, mouseX, mouseY) {
+    this.position.x = mouseX - this.size.width / 2;
+    this.position.y = mouseY - this.size.height / 2;
+    ctx.drawImage(
+      this.img,
+      this.position.x,
+      this.position.y,
+      this.size.width,
+      this.size.height
+    );
+  }
+}
+export class Healthbar {
+  constructor(hp) {
+    this.hp = hp;
+  }
 
-        this.img = new Image();
-        this.path = "./res/img/crosshair.png";
-        this.img.src = this.path;
-        this.size = {
-            width: 100,
-            height: 100
-        };
-        this.position = {
-            x: 0,
-            y: 0
-        };
-    }
-    draw(ctx, mouseX, mouseY){
-        this.position.x = mouseX - this.size.width / 2;
-        this.position.y = mouseY - this.size.height /2;
-        ctx.drawImage(this.img, this.position.x, this.position.y, this.size.width, this.size.height)
-    }
+  draw(ctx) {
+    ctx.save();
+    ctx.fillStyle = "red";
+    ctx.fillRect(10, 10, this.hp, 20);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(10, 10, this.hp, 20);
+    ctx.restore();
+  }
 }

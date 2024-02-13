@@ -1,8 +1,9 @@
 import { Zombie } from "./zombies/Zombie.js";
-import { Background, Crosshair } from "./ui/basic-util.js";
+import { Background, Crosshair, Healthbar } from "./ui/basic-util.js";
 
 const background = new Background();
 const crosshair = new Crosshair();
+const healthBar = new Healthbar(100);
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -39,11 +40,24 @@ let mouseX;
 let mouseY;
 document.addEventListener("mousemove", (e) => {
   const rect = canvas.getBoundingClientRect();
-   mouseX =
-    ((e.clientX - rect.left) / (rect.right - rect.left)) * canvas.width;
-  mouseY =
-    ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height;
-  
+  mouseX = ((e.clientX - rect.left) / (rect.right - rect.left)) * canvas.width;
+  mouseY = ((e.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height;
+});
+
+document.addEventListener("click", (e) => {
+  for (const zombie of Zombie.zombies) {
+    if (
+      zombie.position.x < crosshair.position.x + 40 &&
+      zombie.position.x + zombie.size.width >
+        crosshair.position.x + crosshair.size.width / 2 &&
+      zombie.position.y < crosshair.position.y + 40 &&
+      zombie.position.y + zombie.size.height >
+        crosshair.position.y + crosshair.size.height / 2
+    ) {
+      zombie.respawn();
+      break;
+    }
+  }
 });
 //herni smycka
 const gameLoop = () => {
@@ -71,14 +85,15 @@ const clearCanvas = () => {
 };
 const update = () => {
   Zombie.zombies.map((zombie) => {
-    zombie.update();
+    zombie.update(healthBar);
   });
 };
 const render = () => {
   Zombie.zombies.map((zombie) => {
     zombie.draw(ctx);
   });
-  crosshair.draw(ctx, mouseX, mouseY)
+  crosshair.draw(ctx, mouseX, mouseY);
+  healthBar.draw(ctx);
 };
 const getFps = () => {};
 

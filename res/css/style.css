@@ -4,7 +4,7 @@
 }
 
 html, body{
-    cursor: pointer;
+    cursor: none;
     overflow: hidden;
     margin: 0;
     background-color: black;
